@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1, shrink-to-fit=no"
+    />
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.1/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+      integrity="sha384-iYQeCzEYFbKjA/T2uDLTpkwGzCiq6soy8tYaI1GyVh/UjpbCx/TYkiZhlZB6+fzT"
+      crossorigin="anonymous"
+    />
+
+    <link rel="stylesheet" href="./styles.css" />
+    <title>Demo App</title>
+  </head>
+  <body>
+    <div class="m-4">
+      <h1>Socket Client</h1>
+      <hr />
+      <div class="row">
+        <div class="col-6">
+          <h3>Enviar Mensaje</h3>
+          <hr />
+          <input
+            type="text"
+            id="txtUid"
+            class="form-control mb-2"
+            placeholder="uid"
+            autocomplete="false"
+          />
+
+          <input
+            type="text"
+            id="txtMensaje"
+            class="form-control mb-2"
+            placeholder="Mensajes"
+            autocomplete="false"
+          />
+
+          <h3>Usuarios</h3>
+          <hr />
+          <ul id="lista-usuarios"></ul>
+        </div>
+        <div class="col-6">
+          <h3>Chats</h3>
+          <div class="card">
+            <div id="chats-body" class="card-body"></div>
+          </div>
+          <h3>Privados</h3>
+          <div class="card">
+            <div id="private" class="card-body"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <script src="./socket.io/socket.io.js"></script>
+    <script src="./js/socket-client.js"></script>
+    <script src="./js/chat.js"></script>
+  </body>
+</html>
