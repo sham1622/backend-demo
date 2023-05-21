@@ -3,6 +3,7 @@ require("dotenv").config();
 const { dbConnection } = require("../database/config");
 const cors = require("cors");
 const { socketControllers } = require("../sockets/controller");
+const { swaggerDocs: v1SwaggerDocs } = require("../swagger");
 
 class Server {
   constructor() {
@@ -61,6 +62,7 @@ class Server {
   listen() {
     this.app.listen(this.port, () => {
       console.log("Servidor corriendo en puerto", this.port);
+      v1SwaggerDocs(this.app, this.port)
     });
   }
 }
