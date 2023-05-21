@@ -93,6 +93,7 @@ const eliminarTask = async (req, res = express.request) => {
       ok: true,
       updatedTask,
     });
+    console.log(`Task ${taskId} deleted`)
   } catch (error) {
     console.log(error);
     res.status(500).json({
