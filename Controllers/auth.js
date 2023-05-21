@@ -4,7 +4,6 @@ const Usuario = require("../models/UsuarioScheme");
 const { generarJWT } = require("../helpers/jwt");
 
 const crearUsuario = async (req, res = express.request) => {
-  console.log("crear usuario");
   const { name, email, password } = req.body;
   try {
     let usuario = await Usuario.findOne({ email: email });
@@ -22,12 +21,14 @@ const crearUsuario = async (req, res = express.request) => {
       ok: true,
       usuario,
     });
+    console.log(`Usuario ${name} creado con éxito!`);
   } catch (error) {
     console.log(error);
     res.status(500).json({
       ok: false,
       error,
     });
+    console.log(`Error al crear usuario ${name}`);
   }
 };
 
