@@ -1,4 +1,3 @@
-const swaggerJSDoc = require("swagger-jsdoc");
 const swaggerUi = require("swagger-ui-express");
 const YAML = require("yamljs");
 
@@ -8,4 +7,4 @@ const swaggerDocs = (app, port) => {
   app.use("/api/docs", swaggerUi.serve, swaggerUi.setup(swaggerDocument));
 };
  
-module.exports = { swaggerDocs };   
+module.exports = { swaggerDocs };  

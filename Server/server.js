@@ -10,7 +10,7 @@ class Server {
     this.headers = {
       cors: {
         origin: "*",
-        methods: ["GET", "POST"],
+        methods: ["GET", "POST", "PUT", "PATCH", "DELETE"],
       },
     };
 
@@ -22,17 +22,15 @@ class Server {
 
     this.paths = {
       auth: "/api/auth",
+      doc: "/",
       task: "/api/task",
     };
 
     this.connectToDB();
     this.addMiddlewares();
     this.setRoutes();
-
-    //Sockets
     this.sockets();
   }
-
   //Base Datos
   async connectToDB() {
     await dbConnection();
@@ -41,18 +39,17 @@ class Server {
   addMiddlewares() {
     // CORS
     this.app.use(cors());
-
     // Lectura y parseo del body
     this.app.use(express.json());
-
-    // public folder
-    this.app.use(express.static("public"));
   }
 
   setRoutes() {
     //Rutas
     this.app.use(this.paths.auth, require("../routes/auth"));
+    this.app.use(this.paths.doc, require("../routes/doc"));
     this.app.use(this.paths.task, require("../routes/task"));
+    // public folder
+    this.app.use(express.static("public"));
   }
 
   sockets() {
