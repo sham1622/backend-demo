@@ -74,12 +74,6 @@ const eliminarTask = async (req, res = express.request) => {
   const taskBody = req.body;
   try {
     const task = await Task.findById(taskId);
-    if (!task) {
-      return res.status(404).json({
-        ok: false,
-        task: "Task not found",
-      });
-    }
     if (!task.user.equals(new ObjectId(req.uid))) {
       return res.status(500).json({
         ok: false,
@@ -93,12 +87,12 @@ const eliminarTask = async (req, res = express.request) => {
       ok: true,
       updatedTask,
     });
-    console.log(`Task ${taskId} deleted`)
+    console.log(`Task ${taskId} deleted`);
   } catch (error) {
     console.log(error);
-    res.status(500).json({
+    return res.status(404).json({
       ok: false,
-      msg: "Error Interno",
+      task: "Task not found",
     });
   }
 };

@@ -5,33 +5,6 @@ info:
   description: Documentación de la API utilizando Swagger 3.0.0
 
 paths:
-  /api/auth/:
-    post:
-      summary: Iniciar sesión de usuario
-      requestBody:
-        required: true
-        content:
-          application/json:
-            schema:
-              type: object
-              properties:
-                email:
-                  type: string
-                  format: email
-                  description: Dirección de correo electrónico del usuario.
-                password:
-                  type: string
-                  minLength: 6
-                  description: Contraseña del usuario.
-              required:
-                - email
-                - password
-      responses:
-        '200':
-          description: Inicio de sesión exitoso.
-        '400':
-          description: Error en la solicitud. Puede haber campos faltantes o inválidos en la solicitud.
-
   /api/auth/new:
     post:
       summary: Crear un nuevo usuario
@@ -58,26 +31,111 @@ paths:
                 - email
                 - password
       responses:
-        '200':
+        "200":
           description: Usuario creado exitosamente.
-        '400':
+        "400":
           description: Error en la solicitud. Puede haber campos faltantes o inválidos en la solicitud.
 
-  /renew:
-    get:
-      summary: Renovar token de autenticación
+  /api/auth/:
+    post:
+      summary: Iniciar sesión de usuario
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                email:
+                  type: string
+                  format: email
+                  description: Dirección de correo electrónico del usuario.
+                password:
+                  type: string
+                  minLength: 6
+                  description: Contraseña del usuario.
+              required:
+                - email
+                - password
       responses:
-        '200':
-          description: Token renovado exitosamente.
-        '401':
-          description: Error de autenticación. El token no es válido o ha expirado.
-  
+        "200":
+          description: Inicio de sesión exitoso.
+        "400":
+          description: Error en la solicitud. Puede haber campos faltantes o inválidos en la solicitud.
+  # /renew:
+  #   get:
+  #     summary: Renovar token de autenticación
+  #     responses:
+  #       '200':
+  #         description: Token renovado exitosamente.
+  #       '401':
+  #         description: Error de autenticación. El token no es válido o ha expirado.
+
   /api/task/:
     get:
       summary: Obtener lista de tareas
       responses:
-        '200':
+        "200":
           description: Lista de tareas obtenida exitosamente.
+      security:
+        - x-token: []
+
+    post:
+      summary: Crear una nueva tarea
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/Task"
+      responses:
+        "200":
+          description: Tarea creada exitosamente.
+      security:
+        - x-token: []
+
+  /api/task/{id}:
+    put:
+      summary: Actualizar una tarea existente
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema:
+            type: string
+          description: ID de la tarea a actualizar.
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/Task"
+      responses:
+        "200":
+          description: Tarea actualizada exitosamente.
+        "404":
+          description: Tarea no encontrada.
+        "500":
+          description: El usuario no tiene permisos para modificar esta tarea.
+      security:
+        - x-token: []
+
+    delete:
+      summary: Eliminar una tarea existente
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema:
+            type: string
+          description: ID de la tarea a eliminar.
+      responses:
+        "200":
+          description: Tarea eliminada exitosamente.
+        "404":
+          description: Tarea no encontrada.
+        "500":
+          description: El usuario no tiene permisos para modificar esta tarea.
       security:
         - x-token: []
 
@@ -93,14 +151,28 @@ components:
       bearerFormat: JWT
 
   schemas:
+    Usuario:
+      type: object
+      properties:
+        name:
+          type: string
+          description: Nombre del usuario
+        email:
+          type: string
+          description: Email del usuario
+        password:
+          type: string
+          description: Password del usuario
+      required: 
+        - name
+        - email
+        - password
+
     Task:
       type: object
       properties:
         title:
           type: string
           description: Título de la tarea.
-        description:
-          type: string
-          description: Descripción de la tarea.
       required:
         - title
