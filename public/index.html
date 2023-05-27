@@ -15,9 +15,12 @@
     />
 
     <link rel="stylesheet" href="./styles.css" />
-    <title>Demo App</title>
+    <title>Demo Client</title>
   </head>
   <body>
+    <script src="/socket.io/socket.io.js"></script>
+    <!-- <script src="./js/socket-client.js"></script> -->
+
     <div class="m-4">
       <h1>Socket Client</h1>
       <hr />
@@ -25,22 +28,23 @@
         <div class="col-6">
           <h3>Enviar Mensaje</h3>
           <hr />
-          <input
-            type="text"
-            id="txtUid"
-            class="form-control mb-2"
-            placeholder="uid"
-            autocomplete="false"
-          />
-
-          <input
-            type="text"
-            id="txtMensaje"
-            class="form-control mb-2"
-            placeholder="Mensajes"
-            autocomplete="false"
-          />
-
+          <form action="">
+            <input
+              type="text"
+              id="txtUid"
+              class="form-control mb-2"
+              placeholder="uid"
+              autocomplete="false"
+            />
+            <input
+              type="text"
+              id="txtMensaje"
+              class="form-control mb-2"
+              placeholder="Mensajes"
+              autocomplete="false"
+            />
+            <button>Enviar</button>
+          </form>
           <h3>Usuarios</h3>
           <hr />
           <ul id="lista-usuarios"></ul>
@@ -57,8 +61,6 @@
         </div>
       </div>
     </div>
-    <script src="./socket.io/socket.io.js"></script>
-    <script src="./js/socket-client.js"></script>
-    <script src="./js/chat.js"></script>
+    <!-- <script src="./js/chat.js"></script> -->
   </body>
 </html>

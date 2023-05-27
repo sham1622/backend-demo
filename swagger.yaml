@@ -145,10 +145,6 @@ components:
       type: apiKey
       in: header
       name: x-token
-    BearerAuth:
-      type: http
-      scheme: bearer
-      bearerFormat: JWT
 
   schemas:
     Usuario:
