@@ -4,7 +4,7 @@ const { dbConnection } = require('../database/config');
 const cors = require('cors');
 const http = require('http');
 const { Server } = require('socket.io');
-const { socketControllers } = require('../sockets/controller');
+const { socketController } = require('../sockets/controller');
 const { swaggerDocs: v1SwaggerDocs } = require('../swagger');
 
 class BackendServer {
@@ -20,6 +20,7 @@ class BackendServer {
     this.port = process.env.PORT || 3000;
     this.server = http.createServer(this.app);
     this.io = new Server(this.server, this.headers);
+    // this.io = new Server(this.server);
     this.paths = {
       auth: '/api/auth',
       doc: '/',
@@ -43,7 +44,7 @@ class BackendServer {
     // Lectura y parseo del body
     this.app.use(express.json());
     // public folder
-    this.app.use(express.static('public'));
+    this.app.use("/static", express.static('public'));
   }
 
   setRoutes() {
@@ -54,10 +55,9 @@ class BackendServer {
   }
 
   sockets() {
-    console.log('🚀 ~ file: server.js:54 ~ Server ~ sockets ~ sockets:');
     this.io.on('connection', (socket) => {
       console.log('conexion detectada');
-      socketControllers(socket, this.io);
+      socketController(socket, this.io);
     });
   }
 

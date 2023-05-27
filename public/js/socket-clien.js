@@ -1,14 +1,14 @@
 const socket = io();
 
-socket.on('connect', () => {
-  console.log('connected', socket.id);
-});
-
 const payload = {
   mensaje: 'Hello world',
   uid: 123,
   fecha: 'Oct 27, 2022',
 };
+
+socket.on('connect', () => {
+  console.log('connected', socket.id);
+});
 
 socket.emit('mensaje-de-cliente', payload, (data) => {
   console.log('Respuesta a tu mensaje', data);

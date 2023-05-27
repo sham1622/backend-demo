@@ -1,3 +1,5 @@
+const mongoose = require('mongoose');
+const { crearMessage, listarMessages } = require('../Controllers/Message.js');
 const usuarios = [];
 
 const socketController = (socket, io) => {
@@ -8,6 +10,12 @@ const socketController = (socket, io) => {
   socket.on('disconnect', () => {
     usuarios.splice(usuarios.indexOf(socket.id), 1);
     console.log('Cliente Desconectado', socket.id);
+  });
+
+  socket.on('broadcast-message', (msg) => {
+    console.log(`${socket.id}, ${msg}`);
+    crearMessage(msg);
+    io.emit('broadcast-message', msg);
   });
 
   socket.on('mensaje-de-cliente', (payload, callback) => {

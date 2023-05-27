@@ -18,14 +18,11 @@
     <title>Demo Client</title>
   </head>
   <body>
-    <script src="/socket.io/socket.io.js"></script>
-    <!-- <script src="./js/socket-client.js"></script> -->
-
     <div class="m-4">
-      <h1>Socket Client</h1>
+      <h1>ROOM</h1>
       <hr />
       <div class="row">
-        <div class="col-6">
+        <!-- <div class="col-6">
           <h3>Enviar Mensaje</h3>
           <hr />
           <form action="">
@@ -44,12 +41,12 @@
               autocomplete="false"
             />
             <button>Enviar</button>
-          </form>
-          <h3>Usuarios</h3>
+          </form> -->
+          <h3>Mensajes</h3>
           <hr />
-          <ul id="lista-usuarios"></ul>
+          <ul id="messages"></ul>
         </div>
-        <div class="col-6">
+        <!-- <div class="col-6">
           <h3>Chats</h3>
           <div class="card">
             <div id="chats-body" class="card-body"></div>
@@ -58,9 +55,22 @@
           <div class="card">
             <div id="private" class="card-body"></div>
           </div>
-        </div>
+        </div> -->
       </div>
     </div>
-    <!-- <script src="./js/chat.js"></script> -->
+
+    <script src="/socket.io/socket.io.js"></script>
+    <!-- <script src="./js/socket-clien.js"></script>
+    <script src="./js/chat.js"></script> -->
+    <script>
+      var socket = io();
+      var messages = document.getElementById('messages');
+      socket.on('broadcast-message', function (msg) {
+        var item = document.createElement('li');
+        item.textContent = msg;
+        messages.appendChild(item);
+        window.scrollTo(0, document.body.scrollHeight);
+      });
+    </script>
   </body>
 </html>
